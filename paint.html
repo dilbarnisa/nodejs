@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>painting app</title>
+</head>
+<body>
+
+    <div class="control" id="color">
+        <input type="color" id="color">
+        <input type="number" value="3" id="thickness">
+
+    </div>
+
+    <canvas id="canvas" width="500" height="500"></canvas>
+    <style>
+        *{
+            padding :0px;
+            margin:0px;
+        }
+
+        #canvas{
+            border:solid 1px black;
+
+        }
+
+        #color{
+            padding: 0px;
+            border: none;
+            background: none;
+            width: 44px;
+            height: 44;
+        }
+
+        #tickness{
+            padding: 10px;
+        }
+    </style>
+
+
+<script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+
+    ctx.fillStyle="white";
+    ctx.fillReact(0,0,500,500);
+
+    ctx.fillStyle="black";
+
+    let brushColor ="black";
+    let brushSize = 3;
+
+    document.getElementById("color").addEventListener("change",function(){
+        brushColor = this.value;
+
+    });
+
+    document.getElementById("thickness").addEventListener("change",function(){
+        brushSize = this.value;
+
+    });
+
+    let painting = false;
+
+
+    function paintingStart(e){
+      painting = true;  
+    }
+
+    function paintingEnd(e){
+        painting = false;
+    }
+
+
+    function paintingEnd(e){
+        if(painting==false)return;
+        let x = e.clientX;
+        let y = e.clientY;
+
+        ctx.innerwidth = brushSize;
+        ctx.lineCap = "round";
+        ctx.lineTo(x,y);
+        ctx.strokeStyle=brushColor;
+        ctx.stroke();
+    }
+
+    canvas.addEventListener("mousedown",paintingStart);
+    canvas.addEventListener("mouseup",paintingEnd);
+    canvas.addEventListener("mousemove",draw);
+
+</script> 
+</body>
+</html>
